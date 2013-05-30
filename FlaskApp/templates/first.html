@@ -15,7 +15,7 @@
             <label>Please specify a source file:
             <input type=file name=file size="50">
             </label>
-                <input type=submit value=Upload> or write it by hand
+                <input type=submit value=Upload>
         </form>
     </div>
 </div>
@@ -50,9 +50,8 @@
         <tbody>
         {% for f in files %}
             <tr>
-                <td style="width: 50%"><a href="/uploads/{{ f }}" ><input type="button" value="{{ f }}" class="btn-link"/></a></td>
+                <td style="width: 70%"><a href="/uploads/{{ f }}" ><input type="button" value="{{ f }}" class="btn-link"/></a></td>
                 <td><a href="files/delete/{{ f }}"><div class="btn-small btn-danger"><i class="icon-trash icon-white"></i> Delete</div></a></td>
-                <td><a href="files/edit/{{ f }}"><div class="btn-small btn-info"><i class="icon-edit icon-white"></i> Edit</div></a> </td>
                 <td><a href="files/run/{{ f }}"><div class="btn-small btn-primary"><i class="icon-play icon-white"></i> Run</div></a> </td>
             </tr>
         {% endfor %}
