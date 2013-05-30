@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<head>
+    <title>Run Your Function</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap -->
+    <link href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}" rel="stylesheet" media="screen">
+    <script type="text/javascript" src="http://twitter.github.com/bootstrap/assets/js/bootstrap-dropdown.js"></script>
+</head>
+
+<body>
+
+<div class='navbar navbar-inverse'>
+    <div class='navbar-inner nav-collapse' style="height: auto;">
+        <ul class="nav">
+            <li class="active"><a href="/">Home</a></li>
+{#                        <li><a href="/files">Files</a></li>#}
+            {#            <li><a href="#">Page Two</a></li>#}
+        </ul>
+    </div>
+</div>
+
+
+
+
+{% block content %}
+{% endblock %}
+
+{% block file_list %}
+{% endblock %}
+
+
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+</body>
+

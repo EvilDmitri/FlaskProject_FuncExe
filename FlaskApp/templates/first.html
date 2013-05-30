@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="page-header">
+        <h2>Run your own script! <small>And get the result...</small></h2>
+    </div>
+
+
+
+    <div class="row">
+    <div class="span8">
+
+        <form action="" method=post enctype=multipart/form-data class="well" >
+            <label>Please specify a source file:
+            <input type=file name=file size="50">
+            </label>
+                <input type=submit value=Upload> or write it by hand
+        </form>
+    </div>
+</div>
+
+
+{#<div class="row " >#}
+{#    <div class="span8">#}
+{#        <form class="well" action="/result" method=post>#}
+{#            <label> Your current function:#}
+{#                <textarea class="span7" name="user_function" rows="15">{{ func }}</textarea>#}
+{#            </label>#}
+{##}
+{##}
+{#            <input type=submit value=Run class="btn-primary offset6">#}
+{##}
+{#        </form>#}
+{#    </div>#}
+{#</div>#}
+
+
+{% endblock %}
+
+
+{% block file_list %}
+
+{% if files %}
+        <div class="span9">
+
+                <h3>Your file list</h3>
+
+        <table class="table table-striped" style="table-layout: fixed" >
+        <tbody>
+        {% for f in files %}
+            <tr>
+                <td style="width: 50%"><a href="/uploads/{{ f }}" ><input type="button" value="{{ f }}" class="btn-link"/></a></td>
+                <td><a href="files/delete/{{ f }}"><div class="btn-small btn-danger"><i class="icon-trash icon-white"></i> Delete</div></a></td>
+                <td><a href="files/edit/{{ f }}"><div class="btn-small btn-info"><i class="icon-edit icon-white"></i> Edit</div></a> </td>
+                <td><a href="files/run/{{ f }}"><div class="btn-small btn-primary"><i class="icon-play icon-white"></i> Run</div></a> </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+        </div>
+
+    {% else %}
+    <h3>You don't have uploaded files.</h3>
+    {% endif %}
+{% endblock %}
