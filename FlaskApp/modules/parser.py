@@ -17,6 +17,8 @@ class Parser:
         self.results = []   # List of results received from form 'post'
         self.output = ''    # Type of output
 
+    def clear(self):
+        self.__init__()
 
 
     def load(self, filename):
@@ -32,7 +34,8 @@ class Parser:
 
     def get_macros(self):
         """
-            Retrieve macros from file content
+            Retrieve macros from file content and put them into html
+            Replace macros with tag names
         """
         for number, line in enumerate(self.content):
 
@@ -43,21 +46,26 @@ class Parser:
                 value = Value()
 
                 # Find the content of macro
-                match = re.search(r'INPUTFIELD_TXT\((.+?)\)', self.content)
+                match = re.search(r'INPUTFIELD_TXT\((.+?)\)', line)
 
                 # Get array of user defined fields
                 text = match.group(1).split(', ')
 
                 # The name of user defined element (Maybe it should not be defined by user?)
-                value.id = text.group(1)
+                value.id = text[0]
+                value.id = value.id[1:-1]   # and remove quotes
 
                 value.n_stroke = number
 
                 # Add new macro into final list
                 self.values.append(value)
 
+                # Get name of tag and remove quotes
+                name = text[0]
+                name = name[1:-1]
+
                 # Paste fields into html-tag
-                tag = '{desc} <input type="text" name="{name}">'.format(desc=text[1], name=text[0])
+                tag = '''{0} <input type="text" name="{1}">'''.format(text[1], name)
 
                 # Add tag to html list
                 self.html.append(tag)
@@ -66,10 +74,18 @@ class Parser:
                 self.content[number] = line.replace(match.group(0), value.id)
 
     def get_html(self, filename):
+
+        form_open = '<form action="/result/{filename}" method=post>'.format(filename=filename.split('/')[-1])
+        form_close = '<br><input type=submit value=Execute> </form>'
+
         self.load(filename)
         self.get_macros()
 
-        return self.html
+        html = '<br>'.join(self.html)
+
+        html = form_open + html + form_close
+
+        return html
 
 
     def insert_values(self):
@@ -82,7 +98,22 @@ class Parser:
         """ Put data in values
         :param results: dictionary with results from form response
         """
-        for result in results.iterkey():
+
+        for value in self.values:
+            value.val = results[value.id]
+            line = self.content[value.n_stroke]
+            self.content[value.n_stroke] = line.replace(value.id, value.val)
+
+        fw = open('temp/t.py', 'w')
+        for line in self.content[:-1]:
+            fw.write(line)
+        fw.flush()
+        fw.close()
+
+
+        a = __import__('temp.t', fromlist=[])
+
+        return str(a.t.c)
 
 
 
@@ -98,13 +129,3 @@ class Parser:
     def get_output(self):
         output = self.content[-1]
 
-
-
-
-
-    def show_html(self, filename):
-        html = '''<form action="result">
-                    <br>
-                    <br>
-    <input type="submit" value="Submit">
-    </form>'''

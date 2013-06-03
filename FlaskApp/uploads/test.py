@@ -3,6 +3,6 @@
 a = INPUTFIELD_TXT("a_name", "Enter a")
 b = INPUTFIELD_TXT("b_name", "Enter b")
 
-c = int(a) + int(b)
+c = a + b
 
 OUTPUT_TEXT("title", data=c)

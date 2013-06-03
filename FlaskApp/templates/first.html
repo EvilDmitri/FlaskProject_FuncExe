@@ -42,18 +42,23 @@
 {% block file_list %}
 
 {% if files %}
-        <div class="span9">
+        <div class="span6">
 
                 <h3>Your file list</h3>
 
         <table class="table table-striped" style="table-layout: fixed" >
         <tbody>
         {% for f in files %}
+
             <tr>
-                <td style="width: 70%"><a href="/uploads/{{ f }}" ><input type="button" value="{{ f }}" class="btn-link"/></a></td>
+                <td style="width: 75%"><a href="/uploads/{{ f }}" ><input type="button" value="{{ f }}" class="btn-link"/></a></td>
                 <td><a href="files/delete/{{ f }}"><div class="btn-small btn-danger"><i class="icon-trash icon-white"></i> Delete</div></a></td>
-                <td><a href="files/run/{{ f }}"><div class="btn-small btn-primary"><i class="icon-play icon-white"></i> Run</div></a> </td>
+{#                <td><a href="result/{{ f }}"><div class="btn-small btn-primary"><i class="icon-play icon-white"></i> Parse</div></a> </td>#}
             </tr>
+            <tr>
+                <td><iframe src="result/{{ f }}"></iframe></td>
+            </tr>
+
         {% endfor %}
         </tbody>
         </table>

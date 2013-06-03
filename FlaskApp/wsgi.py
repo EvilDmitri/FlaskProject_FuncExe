@@ -10,6 +10,9 @@ application = app = Flask(__name__)
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+from modules.parser import Parser
+parser = Parser()
+
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -33,9 +36,32 @@ def first():
     return render_template('first.html', files=files)
 
 
-@app.route('/result', methods=['GET', 'POST'])
-def result():
-    return 'Under construction'
+@app.route('/result/<filename>', methods=['GET', 'POST'])
+def result(filename):
+
+
+
+    if request.method == 'GET':
+        parser.clear()
+
+        filename = UPLOAD_FOLDER + '/' + filename
+
+        html = parser.get_html(filename)
+
+
+        #return render_template('result.html', html=html)
+        return html
+
+    if request.method == 'POST':
+        # for key in request.form:
+        #     print key, request.form[key]
+
+        result = parser.put_results(request.form)
+
+        return result
+
+
+
 
 
 from flask import send_from_directory
@@ -57,4 +83,5 @@ def delete_file(file_name=None):
 
 
 if __name__ == "__main__":
+    app.debug = True
     app.run()
