@@ -41,6 +41,7 @@ def result(filename):
 
     if request.method == 'GET':
         filename = UPLOAD_FOLDER + '/' + filename
+        parser.clear()
         parser.process(filename)
         tags = parser.get_tags()
 
@@ -48,8 +49,17 @@ def result(filename):
         #return html
 
     if request.method == 'POST':
+        # for item in request.form:
+        #     print request.form[item]
+        refs = []
+        for field in parser.fields:
+            refs.append('='.join([field, request.form[field]]))
 
-        result = parser.get_outputs()
+        refs = ' and '.join(refs)
+
+        query_string = 'SELECT * FROM {table} WHERE {refs}'
+
+        result = query_string.format(table=request.form['table'], refs=refs)
         tags = parser.get_tags()
         return render_template('result.html', html=tags, result=result)
 

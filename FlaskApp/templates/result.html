@@ -1,18 +1,28 @@
-
-<div class="span7">
-<form action="result.html" method=post >
-
-{% for tag in html %}
-    {{ tag | safe }} <br>
-{% endfor %}
-<input type="submit">
-
-</form>
-</div>
+{% extends "base.html" %}
 
 
-<div>
+{% block content %}
+<p></p>
+    <div class="span5">
+    <form action="result.html" method=post >
+
+    {% for tag in html %}
+        {{ tag | safe }} <br>
+    {% endfor %}
+    <p>
+    <button type="submit" class="btn-success"><i class="icon-play icon-white"></i>Submit Query</button>
+    </p>
+
+    </form>
+    </div>
+
+<br>
+
+<div class="span5">
     {% if result %}
         {{ result }}
+
     {% endif %}
 </div>
+
+{% endblock %}

@@ -1,15 +1,18 @@
 
 keys_dict = {
     'text_input': '<input type="text" name="{name}">{desc}',
-    'radiobutton': '<input type="radio" name="table" value="{desc}">{desc}'
+    'radiobutton': '<input type="radio" name="table" value="{desc}" checked>{desc}'
 }
 
 
 class Parser(object):
     def __init__(self):
         self.outputs = {}
+        self.results = {}
         self.tags = []
         self.content = []
+
+        self.fields = []
 
     def clear(self):
         self.__init__()
@@ -29,7 +32,21 @@ class Parser(object):
                     value = key.strip().split(': ')[1]
                     self.outputs['text'] = value
 
-            else:
+            elif key.startswith('text'):
+                try:
+                    value = key.strip().split(': ')[1]
+                    key = key.strip().split(': ')[0]
+                    self.fields.append(value)
+                except IndexError:
+                    pass
+
+                try:
+                    tag = keys_dict[key].format(name=value, desc=value)
+                    return tag
+                except KeyError:
+                    return
+
+            elif key.startswith('radio'):
                 try:
                     value = key.strip().split(': ')[1]
                     key = key.strip().split(': ')[0]
@@ -56,6 +73,8 @@ class Parser(object):
 
     def get_outputs(self):
         return self.outputs
+
+
 
 if __name__== '__main__':
 

@@ -1,5 +1,5 @@
 text_input: StatNr
-text_input: Datum (dd/mm/yyyy)
+text_input: Datum
 radiobutton: tawes2
 radiobutton: tawes3
 
