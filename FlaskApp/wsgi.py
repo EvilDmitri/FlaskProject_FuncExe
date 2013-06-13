@@ -39,29 +39,19 @@ def first():
 @app.route('/result/<filename>', methods=['GET', 'POST'])
 def result(filename):
 
-
-
     if request.method == 'GET':
-        parser.clear()
-
         filename = UPLOAD_FOLDER + '/' + filename
+        parser.process(filename)
+        tags = parser.get_tags()
 
-        html = parser.get_html(filename)
-
-
-        #return render_template('result.html', html=html)
-        return html
+        return render_template('result.html', html=tags)
+        #return html
 
     if request.method == 'POST':
-        # for key in request.form:
-        #     print key, request.form[key]
 
-        result = parser.put_results(request.form)
-
-        return result
-
-
-
+        result = parser.get_outputs()
+        tags = parser.get_tags()
+        return render_template('result.html', html=tags, result=result)
 
 
 from flask import send_from_directory

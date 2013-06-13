@@ -1,8 +1,6 @@
-#! /usr/bin/env python
+text_input: StatNr
+text_input: Datum (dd/mm/yyyy)
+radiobutton: tawes2
+radiobutton: tawes3
 
-a = INPUTFIELD_TXT("a_name", "Enter a")
-b = INPUTFIELD_TXT("b_name", "Enter b")
-
-c = a + b
-
-OUTPUT_TEXT("title", data=c)
+output_text: Lufttemperatur

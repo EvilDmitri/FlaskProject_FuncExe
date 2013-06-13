@@ -1,12 +1,18 @@
-{% extends 'base.html' %}
 
-{% block file_list %}
-    <div class="span6">
+<div class="span7">
+<form action="result.html" method=post >
+
+{% for tag in html %}
+    {{ tag | safe }} <br>
+{% endfor %}
+<input type="submit">
+
+</form>
+</div>
 
 
-    {{ html | safe }}
-
-
-    </div>
-
-{% endblock %}
+<div>
+    {% if result %}
+        {{ result }}
+    {% endif %}
+</div>
